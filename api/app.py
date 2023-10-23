@@ -16,10 +16,9 @@ def submit():
 
 @app.route("/query")
 def process_query(query):
-	#query = request.args.get('q', 'dinosaurs')
-	if query == "dinosaurs":
-		return "Dinosaurs ruled the Earth 200 million years ago"
-	elif query == "asteroids":
-		return "Unknown"
-	else:
-		return f"You searched for: {query}"
+    if query == "dinosaurs":
+        return "Dinosaurs ruled the Earth 200 million years ago"
+    elif query == "asteroids":
+        return "Unknown"
+    else:
+        return f"You searched for: {query}"
