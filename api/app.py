@@ -25,8 +25,8 @@ def process_query(query):
     add_match = re.search(r"What is (\d+) plus (\d+)?", query, re.I)
     mul_match = re.search(r"What is (\d+) multiplied by (\d+)?", query, re.I)
     minus_match = re.search(r"What is (\d+) minus (\d+)?", query, re.I)
-    prime_match = re.search(r"Which of the following numbers\
-            are primes: (\d+), (\d+), (\d+), (\d+), (\d+)?", query, re.I)
+    pa = r"Which of the following numbers are primes: ([\d, ]+)?"
+    prime_match = re.search(pa, query, re.I)
     if query == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
     elif query == "asteroids":
