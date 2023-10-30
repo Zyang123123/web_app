@@ -30,10 +30,10 @@ def process_query(query):
         return "Unknown"
     elif add_match:
         num1, num2 = map(int, add_match.groups())
-        return num1 + num2
+        return str(num1 + num2)
     elif mul_match:
         num1, num2 = map(int, mul_match.groups())
-        return num1 * num2
+        return str(num1 * num2)
     elif query == "What is your name?":
         return "VW50"
     else:
