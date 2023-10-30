@@ -27,6 +27,9 @@ def process_query(query):
     minus_match = re.search(r"What is (\d+) minus (\d+)?", query, re.I)
     pa = r"Which of the following numbers are primes: ([\d, ]+)?"
     prime_match = re.search(pa, query, re.I)
+    s_q = r"Which of the following numbers is both a square and a cube: " \
+        r"([\d, ]+)?"
+    s_q_match = re.search(s_q, query, re.I)
     if query == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
     elif query == "asteroids":
@@ -41,9 +44,30 @@ def process_query(query):
         num1, num2 = map(int, minus_match.groups())
         return str(num1 - num2)
     elif prime_match:
-        num1, num2, num3, num4, num5 = map(int, minus_match.groups())
-        return is_prime(num1) + is_prime(num2) + is_prime(num3) + \
-            is_prime(num4) + is_prime(num5)
+        numbers_str = prime_match.group(1)
+        if numbers_str:
+            numbers = list(map(int, numbers_str.split(',')))
+            prime_numbers = [
+                str(x) for x in numbers
+                if x > 1 and
+                all(x % i != 0 for i in range(2, int(x ** 0.5) + 1))
+            ]
+        if prime_numbers:
+            return ", ".join(prime_numbers)
+        else:
+            return "No prime numbers found."
+    elif s_q_match:
+        numbers_str = s_q_match.group(1)
+        if numbers_str:
+            numbers = list(map(int, numbers_str.split(',')))
+            both_cube_and_square_numbers = [
+                str(x) for x in numbers
+                if round(x ** (1/3)) ** 3 == x and x == round(x ** 0.5) ** 2
+               ]
+            if both_cube_and_square_numbers:
+                return ", ".join(both_cube_and_square_numbers)
+            else:
+                return "No numbers found that are both cubes and squares."
     elif query == "What is your name?":
         return "VW50"
     else:
