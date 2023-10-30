@@ -18,5 +18,9 @@ def test_plus():
     assert process_query("What is 50 plus 25?") == "75"
 
 
+def test_minus():
+    assert process_query("What is 50 minus 25?") == "25"
+
+
 def test_mul():
     assert process_query("What is 50 multiplied by 2?") == "100"

@@ -24,6 +24,7 @@ def query():
 def process_query(query):
     add_match = re.search(r"What is (\d+) plus (\d+)?", query, re.I)
     mul_match = re.search(r"What is (\d+) multiplied by (\d+)?", query, re.I)
+    minus_match = re.search(r"What is (\d+) minus (\d+)?", query, re.I)
     if query == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
     elif query == "asteroids":
@@ -34,6 +35,9 @@ def process_query(query):
     elif mul_match:
         num1, num2 = map(int, mul_match.groups())
         return str(num1 * num2)
+    elif minus_match:
+        num1, num2 = map(int, minus_match.groups())
+        return str(num1 - num2)
     elif query == "What is your name?":
         return "VW50"
     else:
