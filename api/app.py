@@ -16,6 +16,11 @@ def submit():
 
 
 @app.route("/query")
+def query():
+    query = request.args.get("q")
+    return process_query(query)
+
+
 def process_query(query):
     add_match = re.search(r"What is (\d+) plus (\d+)?", query, re.I)
     mul_match = re.search(r"What is (\d+) multiplied by (\d+)?", query, re.I)
