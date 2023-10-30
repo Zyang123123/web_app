@@ -12,4 +12,3 @@ def test_does_not_know_about_asteroids():
 
 def test_player_name():
     assert process_query("What is your name?") == "VW50"
-    

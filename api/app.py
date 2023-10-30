@@ -24,4 +24,3 @@ def process_query(query):
         return "VW50"
     else:
         return f"You searched for: {query}"
-        
