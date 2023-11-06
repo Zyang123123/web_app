@@ -23,8 +23,8 @@ def hello_githubname():
 
 @app.route("/form/submit_github", methods=["POST"])
 def formsubmit():
-    input_name = request.form.get("name")
-    response = requests.get("https://api.github.com/users/{input_name}/repos")
+    username = request.form.get("name")
+    response = requests.get("https://api.github.com/users/{username}/repos")
     repos_info = []
     if response.status_code == 200:
         repos = response.json()
@@ -55,7 +55,9 @@ def formsubmit():
                 'latest_commit': commit_data
             })
             # print(repo["full_name"])
-    return render_template("hellogithub.html", name=input_name, repos=repos_info)
+    else:
+        return f"Failed to fetch repositories for user {username}, status code: {repos_response.status_code}"
+    return render_template("hellogithub.html", username=username, repos=repos_info)
 
 
 @app.route("/query")
