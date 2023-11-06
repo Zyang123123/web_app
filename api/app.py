@@ -25,12 +25,37 @@ def hello_githubname():
 def formsubmit():
     input_name = request.form.get("name")
     response = requests.get("https://api.github.com/users/{input_name}/repos")
-    repos = []
+    repos_info = []
     if response.status_code == 200:
         repos = response.json()
         for repo in repos:
-            print(repo["full_name"])
-    return render_template("hellogithub.html", name=input_name, repos=repos)
+            # Get the commits URL and remove the
+            # placeholder for SHA at the end.
+            commits_url = repo['commits_url'].split('{')[0]
+            commits_response = requests.get(commits_url)
+
+            if commits_response.status_code == 200:
+                commits = commits_response.json()
+                if commits:  # Check if there is at least one commit
+                    latest_commit = commits[0]
+                    # Assume the first one is the latest
+                    commit_data = {
+                        'commit_hash': latest_commit['sha'],
+                        'commit_author': latest_commit['commit']['author']['name'],
+                        'commit_date': latest_commit['commit']['author']['date'],
+                        'commit_message': latest_commit['commit']['message']
+                    }
+                else:
+                    commit_data = {}
+            else:
+                commit_data = {}
+            repos_info.append({
+                'name': repo['name'],
+                'updated_at': repo['updated_at'],
+                'latest_commit': commit_data
+            })
+            # print(repo["full_name"])
+    return render_template("hellogithub.html", name=input_name, repos=repos_info)
 
 
 @app.route("/query")
