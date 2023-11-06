@@ -31,6 +31,9 @@ def formsubmit():
         for repo in repos:
             # Get the commits URL and remove the
             # placeholder for SHA at the end.
+            stargazers_count = repo['stargazers_count']
+            forks_count = repo['forks_count']
+            open_issues_count = repo['open_issues_count']
             commits_url = repo['commits_url'].split('{')[0]
             commits_response = requests.get(commits_url)
 
@@ -52,7 +55,10 @@ def formsubmit():
             repos_info.append({
                 'name': repo['name'],
                 'updated_at': repo['updated_at'],
-                'latest_commit': commit_data
+                'latest_commit': commit_data,
+                'stargazers_count': stargazers_count,
+                'forks_count': forks_count,
+                'open_issues_count': open_issues_count
             })
             # print(repo["full_name"])
     else:
