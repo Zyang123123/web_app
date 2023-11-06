@@ -1,3 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Head content here -->
+    <title>Hello {{ name }}! This is {{ username }}'s Repositories</title>
+</head>
 <body>
-<h1>Hello {{ name }}!</h1>
+    <h1>{{ username }}'s GitHub Repositories</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Repository</th>
+                <th>Last Updated</th>
+                <th>Latest Commit Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for repo in repos %}
+            <tr>
+                <td>{{ repo.name }}</td>
+                <td>{{ repo.updated_at }}</td>
+                <td>
+                    {% if repo.latest_commit %}
+                        Hash: {{ repo.latest_commit.commit_hash }}<br>
+                        Author: {{ repo.latest_commit.commit_author }}<br>
+                        Date: {{ repo.latest_commit.commit_date }}<br>
+                        Message: {{ repo.latest_commit.commit_message }}
+                    {% else %}
+                        No commits found.
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
+</html>

@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, render_template, request
 import re
 app = Flask(__name__)
@@ -23,7 +24,13 @@ def hello_githubname():
 @app.route("/form/submit_github", methods=["POST"])
 def formsubmit():
     input_name = request.form.get("name")
-    return render_template("hellogithub.html", name=input_name)
+    response = requests.get("https://api.github.com/users/{input_name}/repos")
+    repos = []
+    if response.status_code == 200:
+        repos = response.json()
+        for repo in repos:
+            print(repo["full_name"])
+    return render_template("hellogithub.html", name=input_name, repos=repos)
 
 
 @app.route("/query")
