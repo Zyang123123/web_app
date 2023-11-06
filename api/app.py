@@ -15,6 +15,17 @@ def submit():
     return render_template("hello.html", name=input_name, age=input_age)
 
 
+@app.route("/form")
+def hello_githubname():
+    return render_template("githubname.html")
+
+
+@app.route("/form/submit", methods=["POST"])
+def formsubmit():
+    input_name = request.form.get("name")
+    return render_template("hellogithub.html", name=input_name)
+
+
 @app.route("/query")
 def query():
     query = request.args.get('q')
