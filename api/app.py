@@ -24,7 +24,7 @@ def hello_githubname():
 @app.route("/form/submit_github", methods=["POST"])
 def formsubmit():
     username = request.form.get("name")
-    response = requests.get("https://api.github.com/users/{username}/repos")
+    response = requests.get(f"https://api.github.com/users/{username}/repos")
     repos_info = []
     if response.status_code == 200:
         repos = response.json()
