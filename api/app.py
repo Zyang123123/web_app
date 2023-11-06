@@ -20,7 +20,7 @@ def hello_githubname():
     return render_template("githubname.html")
 
 
-@app.route("/form/submit", methods=["POST"])
+@app.route("/form/submit_github", methods=["POST"])
 def formsubmit():
     input_name = request.form.get("name")
     return render_template("hellogithub.html", name=input_name)
