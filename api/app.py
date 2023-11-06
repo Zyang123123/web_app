@@ -56,7 +56,7 @@ def formsubmit():
             })
             # print(repo["full_name"])
     else:
-        return f"Failed to fetch repositories for user {username}"
+        return f"{response.status_code} Failed to fetch repositories for user {username}"
     return render_template("hellogithub.html", username=username, repos=repos_info)
 
 
